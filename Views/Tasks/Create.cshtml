@@ -1,0 +1,43 @@
+@model TaskManagerApp.Models.TaskItem
+
+@{
+    ViewData["Title"] = "Create Task";
+}
+
+<h2 class="text-center mb-4">Create New Task</h2>
+
+<div class="container" style="max-width: 500px;">
+    <form asp-action="Create" method="post">
+        <div class="form-group mb-3">
+            <label asp-for="Title" class="form-label fw-bold"></label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="Description" class="form-label fw-bold"></label>
+            <textarea asp-for="Description" class="form-control"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="DueDate" class="form-label fw-bold"></label>
+            <input asp-for="DueDate" class="form-control" type="date" />
+            <span asp-validation-for="DueDate" class="text-danger"></span>
+        </div>
+
+        <div class="form-check mb-3">
+            <input asp-for="IsCompleted" class="form-check-input" />
+            <label asp-for="IsCompleted" class="form-check-label fw-bold"></label>
+        </div>
+
+        <div class="d-flex justify-content-between mt-4">
+            <button type="submit" class="btn btn-success px-4">Create</button>
+            <a asp-action="Index" class="btn btn-secondary px-4">Back to List</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

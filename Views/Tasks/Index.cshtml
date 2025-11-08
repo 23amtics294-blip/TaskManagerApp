@@ -1,0 +1,111 @@
+@model IEnumerable<TaskManagerApp.Models.TaskItem>
+
+@{
+    ViewData["Title"] = "Task List";
+}
+
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold">Your Tasks</h2>
+        <a asp-action="Create" class="btn btn-primary px-4">+ New Task</a>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="text-center text-muted">
+            <p>No tasks yet! Start by adding one above 👆</p>
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-hover align-middle shadow-sm rounded-3">
+                <thead class="table-light">
+                    <tr>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Due Date</th>
+                        <th>Status</th>
+                        <th style="width: 180px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var task in Model)
+                    {
+                        <tr>
+                            <td>@task.Title</td>
+                            <td>@task.Description</td>
+                            <td>@(task.DueDate?.ToString("yyyy-MM-dd") ?? "-")</td>
+                            <td>
+                                @if (task.IsCompleted)
+                                {
+                                    <span class="badge bg-success">Completed</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-warning text-dark">Pending</span>
+                                }
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@task.Id" class="btn btn-sm btn-outline-primary me-2">Edit</a>
+                                <a asp-action="Delete" asp-route-id="@task.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+<style>
+    body {
+        background-color: #f7f4f1;
+        font-family: "Poppins", sans-serif;
+        color: #333;
+    }
+
+    h2 {
+        color: #3b3b3b;
+    }
+
+    .btn-primary {
+        background-color: #a78bfa;
+        border: none;
+        transition: 0.2s;
+    }
+
+    .btn-primary:hover {
+        background-color: #8b5cf6;
+    }
+
+    .btn-outline-primary {
+        border-color: #8b5cf6;
+        color: #8b5cf6;
+    }
+
+    .btn-outline-primary:hover {
+        background-color: #8b5cf6;
+        color: #fff;
+    }
+
+    .btn-outline-danger {
+        border-color: #f87171;
+        color: #f87171;
+    }
+
+    .btn-outline-danger:hover {
+        background-color: #f87171;
+        color: #fff;
+    }
+
+    .table {
+        border-radius: 12px;
+        overflow: hidden;
+        background: white;
+    }
+
+    .table th {
+        background-color: #f3f0eb;
+    }
+</style>
